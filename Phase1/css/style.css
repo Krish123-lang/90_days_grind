@@ -1,0 +1,183 @@
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    /* 4. Add accessible line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+    isolation: isolate;
+}
+
+.nav_container .logo {
+    font-size: 1.2em;
+    font-weight: 900;
+}
+
+.nav_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1vw 5vw;
+    box-shadow: 0 1px rgba(0, 0, 0, 0.1);
+    height: 3em;
+}
+
+.nav_links ul {
+    display: flex;
+    gap: 2vw;
+}
+
+.sig_reg {
+    display: flex;
+    gap: 2vw;
+}
+
+ul li a:hover {
+    background-color: rgb(231, 23, 120);
+    border-radius: .4em;
+    color: beige;
+}
+
+ul li a {
+    padding: .4em;
+}
+
+.btn {
+    color: beige;
+    border-radius: .4em;
+    padding: .4em;
+}
+
+.sig_reg .reg_btn {
+    background-color: rgb(26, 128, 0);
+}
+
+.sig_reg .log_btn {
+    background-color: rgb(23, 0, 128);
+}
+
+.sig_reg i {
+    display: none;
+}
+
+.nav_links.active {
+    display: block;
+}
+
+.menu-toggle {
+    cursor: pointer;
+    font-size: 24px;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .nav_links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #333;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav_links ul {
+        flex-direction: column;
+        gap: 1em;
+        padding: 1em 0;
+    }
+
+    .nav_links ul li a {
+        font-size: 1.2em;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav_links.active {
+        display: flex;
+    }
+
+    .sig_reg i {
+        display: block;
+    }
+
+    .nav_links ul,
+    .sig_reg a {
+        display: none;
+    }
+}
