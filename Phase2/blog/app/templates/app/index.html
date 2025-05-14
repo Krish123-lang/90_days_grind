@@ -11,6 +11,7 @@
         <p>{{post.content}}</p>
         <b>{{post.published_at}}</b>
         <a href="{% url 'edit_post' post.id %}">Edit</a>
+        <a href="{% url 'delete_post' post.id %}">Delete</a>
         <hr />
     {% endfor %} 
 {% endblock content %}

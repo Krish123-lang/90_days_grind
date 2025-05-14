@@ -54,7 +54,7 @@ def edit_post(request, id):
     if request.method == "GET":
         context = {'create_post_form': PostForm(instance=post), 'id': id}
         return render(request, "app/create_post_form.html", context)
-    
+
     elif request.method == "POST":
         create_post_form = PostForm(request.POST, instance=post)
         if create_post_form.is_valid():
@@ -64,3 +64,15 @@ def edit_post(request, id):
         else:
             messages.error(request, 'Please correct the following errors:')
             return render(request, 'app/create_post_form.html', {'create_post_form': create_post_form})
+
+
+def delete_post(request, id):
+    post = get_object_or_404(Post, pk=id)
+    context = {'post': post}
+
+    if request.method == "GET":
+        return render(request, 'app/delete_post.html', context)
+    elif request.method == "POST":
+        post.delete()
+        messages.success(request, "Post deleted successfully!")
+        return redirect("home")
