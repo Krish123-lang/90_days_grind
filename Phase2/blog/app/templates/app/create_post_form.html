@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %}
+<a href="{% url 'home' %}">Home</a>
+
+<h1>New Post</h1>
+<form method="post" novalidate>
+  {% csrf_token %} {{create_post_form.as_p}}
+  <input type="submit" value="Submit">
+</form>
+{% endblock content %}

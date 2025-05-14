@@ -3,6 +3,7 @@
     {% block content %}
 
         <h1><u>Home</u></h1>
+        <a href="{% url 'create_post' %}">Create New Post</a>
 
         {% for post in posts %}
         <h1>{{post.title}}</h1>

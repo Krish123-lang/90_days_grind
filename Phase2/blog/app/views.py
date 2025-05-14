@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
+
+from .forms import PostForm
 from .models import Post
 # Create your views here.
 '''
@@ -28,3 +30,16 @@ def home(request) -> HttpResponse:
 
 def about(request):
     return render(request, 'app/about.html')
+
+
+def create_post(request):
+    if request.method == "GET":
+        context = {'create_post_form': PostForm()}
+        return render(request, 'app/create_post_form.html', context)
+    elif request.method == "POST":
+        create_post_form = PostForm(request.POST)
+        if create_post_form.is_valid():
+            create_post_form.save()
+            return redirect('home')
+        else:
+            return render(request, 'app/create_post_form.html', {'create_post_form': create_post_form})
