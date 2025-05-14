@@ -10,8 +10,15 @@
         <i>{{post.author}}</i>
         <p>{{post.content}}</p>
         <b>{{post.published_at}}</b>
-        <a href="{% url 'edit_post' post.id %}">Edit</a>
-        <a href="{% url 'delete_post' post.id %}">Delete</a>
+
+        
+        {% if request.user.is_authenticated and request.user == post.author %}
+            <p>
+                <a href="{% url 'edit_post' post.id %}">Edit</a>
+                <a href="{% url 'delete_post' post.id %}">Delete</a>
+            </p>
+        {% endif %}
+            
         <hr />
     {% endfor %} 
 {% endblock content %}

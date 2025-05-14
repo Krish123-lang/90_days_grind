@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .forms import PostForm
 from .models import Post
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 '''
 posts = [
@@ -32,7 +33,7 @@ def home(request) -> HttpResponse:
 def about(request):
     return render(request, 'app/about.html')
 
-
+@login_required
 def create_post(request):
     if request.method == "GET":
         context = {'create_post_form': PostForm()}
@@ -40,16 +41,20 @@ def create_post(request):
     elif request.method == "POST":
         create_post_form = PostForm(request.POST)
         if create_post_form.is_valid():
-            create_post_form.save()
+            user=create_post_form.save(commit=False)
+            user.author=request.user
+            user.save()
+            # create_post_form.save()
             messages.success(request, 'Post has been created successfully!')
             return redirect('home')
         else:
             messages.error(request, 'Please correct the following errors:')
             return render(request, 'app/create_post_form.html', {'create_post_form': create_post_form})
 
-
+@login_required
 def edit_post(request, id):
-    post = get_object_or_404(Post, id=id)
+    queryset=Post.objects.filter(author=request.user)
+    post = get_object_or_404(queryset, id=id)
 
     if request.method == "GET":
         context = {'create_post_form': PostForm(instance=post), 'id': id}
@@ -65,9 +70,10 @@ def edit_post(request, id):
             messages.error(request, 'Please correct the following errors:')
             return render(request, 'app/create_post_form.html', {'create_post_form': create_post_form})
 
-
+@login_required
 def delete_post(request, id):
-    post = get_object_or_404(Post, pk=id)
+    queryset=Post.objects.filter(author=request.user)
+    post = get_object_or_404(queryset, pk=id)
     context = {'post': post}
 
     if request.method == "GET":
