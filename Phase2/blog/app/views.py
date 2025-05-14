@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 from .forms import PostForm
 from .models import Post
+from django.contrib import messages
 # Create your views here.
 '''
 posts = [
@@ -40,6 +41,8 @@ def create_post(request):
         create_post_form = PostForm(request.POST)
         if create_post_form.is_valid():
             create_post_form.save()
+            messages.success(request, 'Post has been created successfully!')
             return redirect('home')
         else:
+            messages.error(request, 'Please correct the following errors:')
             return render(request, 'app/create_post_form.html', {'create_post_form': create_post_form})
