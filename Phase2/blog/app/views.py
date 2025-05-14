@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 
 from .forms import PostForm
@@ -42,6 +42,24 @@ def create_post(request):
         if create_post_form.is_valid():
             create_post_form.save()
             messages.success(request, 'Post has been created successfully!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Please correct the following errors:')
+            return render(request, 'app/create_post_form.html', {'create_post_form': create_post_form})
+
+
+def edit_post(request, id):
+    post = get_object_or_404(Post, id=id)
+
+    if request.method == "GET":
+        context = {'create_post_form': PostForm(instance=post), 'id': id}
+        return render(request, "app/create_post_form.html", context)
+    
+    elif request.method == "POST":
+        create_post_form = PostForm(request.POST, instance=post)
+        if create_post_form.is_valid():
+            create_post_form.save()
+            messages.success(request, 'Post has been updated successfully!')
             return redirect('home')
         else:
             messages.error(request, 'Please correct the following errors:')
