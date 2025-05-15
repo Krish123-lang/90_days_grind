@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<a href="{% url 'home' %}" class="btn btn-secondary">Go back</a>
+<div class="mt-2">
+  <h1>{{post.title}}</h1>
+  <p>{{post.content}}</p>
+  <b>{{post.author}}</b>
+  <i>{{post.published_at}}</i>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block content %}
+<h1>
+{% if id %}
+    Edit
+{% else %}
+    Create
+{% endif %}
+ Post</h1>
+<a href="{% url 'home' %}" class="btn btn-secondary float-end">Go back</a>
+
+<form method="post" novalidate>
+  {% csrf_token %} {{form.as_p}}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock content %}
