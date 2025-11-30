@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Post
 from .forms import PostForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -11,6 +12,7 @@ def home(request):
     return render(request, 'appone/index.html', context)
 
 
+@login_required(login_url='login')
 def create(request):
     if request.method == "GET":
         context = {'form': PostForm()}
@@ -33,6 +35,7 @@ def post_detail(request, id):
     return render(request, 'appone/post_detail.html', {'post': post})
 
 
+@login_required(login_url='login')
 def edit(request, id):
     queryset = Post.objects.filter(author=request.user)
     post = get_object_or_404(queryset, id=id)
@@ -51,6 +54,7 @@ def edit(request, id):
             return render(request, 'appone/create.html', {'form': form})
 
 
+@login_required(login_url='login')
 def delete(request, id):
     queryset = Post.objects.filter(author=request.user)
     post = get_object_or_404(queryset, pk=id)
