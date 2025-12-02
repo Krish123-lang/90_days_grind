@@ -8,6 +8,7 @@
         <b> {{post.author | title }} </b>
         <p> {{post.content}} </p>
         <i> {{ post.published_at | date:"M d Y" }} </i>
+        <a href="{% url "edit_post" post.id %}">Edit</a>
         <hr>
     {% endfor %}
 {% endblock content %}
