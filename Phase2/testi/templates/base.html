@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="{% static "css/style.css" %}">
 </head>
 <body>
+
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+        </div>
+    {% endif %}
     {% block content %}
     
     {% endblock content %}

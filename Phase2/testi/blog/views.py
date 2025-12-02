@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .forms import BlogForm
 from .models import BlogModel
+from django.contrib import messages
 
 # Create your views here.
 
@@ -20,8 +21,10 @@ def create_post(request):
         form=BlogForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Post created Successfully!")
             return redirect('home')
         else:
+            messages.error(request, "Something went wrong!")
             return render(request, "blog/create_post.html", {"form": form})
 
 def about(request):
