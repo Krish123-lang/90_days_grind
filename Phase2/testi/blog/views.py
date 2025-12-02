@@ -42,5 +42,15 @@ def edit_post(request, id):
             messages.error(request, "Something went wrong!")
             return render(request, "blog/create_post.html", {"form": form})
     
+def delete_post(request, id):
+    post=get_object_or_404(BlogModel, pk=id)
+    context={'post': post}
+    if request.method == "GET":
+        return render(request, "blog/delete_post.html", context)
+    elif request.method == "POST":
+        post.delete()
+        messages.success(request, "Post deleted successfuly!")        
+        return redirect('home')
+
 def about(request):
     return render(request, "blog/about.html")
