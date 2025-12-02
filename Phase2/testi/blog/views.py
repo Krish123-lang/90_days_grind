@@ -1,24 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from .models import BlogModel
+
 # Create your views here.
 
-posts = [
-    {
-        'title': 'Beautiful is better than ugly',
-        'author': 'John Doe',
-        'content': 'Beautiful is better than ugly',
-        'published_at': 'October 1, 2022'
-    },
-    {
-        'title': 'Explicit is better than implicit',
-        'author': 'Jane Doe',
-        'content': 'Explicit is better than implicit',
-        'published_at': 'October 1, 2022'
-    }
-]
-
 def home(request):
+    posts=BlogModel.objects.all()
     context={
         "posts": posts,
         "title": "The zen of python",    }
