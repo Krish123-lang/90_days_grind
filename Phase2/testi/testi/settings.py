@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    
     "blog",
 ]
 
@@ -123,5 +122,5 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-STATIC_URLS="static/"
-STATICFILES_DIRS=[BASE_DIR, "static"]
+STATIC_URLS = "static/"
+STATICFILES_DIRS = [BASE_DIR, "static"]
