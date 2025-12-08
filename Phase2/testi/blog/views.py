@@ -6,51 +6,57 @@ from django.contrib import messages
 
 # Create your views here.
 
+
 def home(request):
-    posts=BlogModel.objects.all()
-    context={
+    posts = BlogModel.objects.all()
+    context = {
         "posts": posts,
-        "title": "The zen of python",    }
+        "title": "The zen of python",
+    }
     return render(request, "blog/home.html", context)
+
 
 def create_post(request):
     if request.method == "GET":
-        form=BlogForm()
-        return render(request, "blog/create_post.html", {'form': form})
+        form = BlogForm()
+        return render(request, "blog/create_post.html", {"form": form})
     elif request.method == "POST":
-        form=BlogForm(request.POST)
+        form = BlogForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "Post created Successfully!")
-            return redirect('home')
+            return redirect("home")
         else:
             messages.error(request, "Something went wrong!")
             return render(request, "blog/create_post.html", {"form": form})
 
+
 def edit_post(request, id):
-    posts=get_object_or_404(BlogModel, id=id)
+    posts = get_object_or_404(BlogModel, id=id)
     if request.method == "GET":
-        context={"form": BlogForm(instance=posts), 'id':id}
+        context = {"form": BlogForm(instance=posts), "id": id}
         return render(request, "blog/create_post.html", context)
     elif request.method == "POST":
-        form=BlogForm(request.POST, instance=posts)
+        form = BlogForm(request.POST, instance=posts)
         if form.is_valid():
             form.save()
             messages.success(request, "Post edited Successfully!")
-            return redirect('home')
+            return redirect("home")
         else:
             messages.error(request, "Something went wrong!")
             return render(request, "blog/create_post.html", {"form": form})
-    
+
+
 def delete_post(request, id):
-    post=get_object_or_404(BlogModel, pk=id)
-    context={'post': post}
+    post = get_object_or_404(BlogModel, pk=id)
+    context = {"post": post}
     if request.method == "GET":
         return render(request, "blog/delete_post.html", context)
     elif request.method == "POST":
         post.delete()
-        messages.success(request, "Post deleted successfuly!")        
-        return redirect('home')
+        messages.success(request, "Post deleted successfuly!")
+        return redirect("home")
+
 
 def about(request):
     return render(request, "blog/about.html")

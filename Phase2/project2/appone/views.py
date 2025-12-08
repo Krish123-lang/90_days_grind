@@ -3,20 +3,21 @@ from .models import Post
 from .forms import PostForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 
 def home(request):
     posts = Post.objects.all()
-    context = {'posts': posts}
-    return render(request, 'appone/index.html', context)
+    context = {"posts": posts}
+    return render(request, "appone/index.html", context)
 
 
-@login_required(login_url='login')
+@login_required(login_url="login")
 def create(request):
     if request.method == "GET":
-        context = {'form': PostForm()}
-        return render(request, 'appone/create.html', context)
+        context = {"form": PostForm()}
+        return render(request, "appone/create.html", context)
     elif request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
@@ -24,45 +25,45 @@ def create(request):
             user.author = request.user
             user.save()
             messages.success(request, "Post Added Successfully!")
-            return redirect('home')
+            return redirect("home")
         else:
             messages.error(request, "Please correct the following errors:")
-            return render(request, 'appone/create.html', {'form': form})
+            return render(request, "appone/create.html", {"form": form})
 
 
 def post_detail(request, id):
     post = get_object_or_404(Post, id=id)
-    return render(request, 'appone/post_detail.html', {'post': post})
+    return render(request, "appone/post_detail.html", {"post": post})
 
 
-@login_required(login_url='login')
+@login_required(login_url="login")
 def edit(request, id):
     queryset = Post.objects.filter(author=request.user)
     post = get_object_or_404(queryset, id=id)
 
     if request.method == "GET":
-        context = {'form': PostForm(instance=post), 'id': id}
-        return render(request, 'appone/create.html', context)
+        context = {"form": PostForm(instance=post), "id": id}
+        return render(request, "appone/create.html", context)
     elif request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
             messages.warning(request, "Post Updated Successfully!")
-            return redirect('home')
+            return redirect("home")
         else:
             messages.error(request, "Please correct the following errors:")
-            return render(request, 'appone/create.html', {'form': form})
+            return render(request, "appone/create.html", {"form": form})
 
 
-@login_required(login_url='login')
+@login_required(login_url="login")
 def delete(request, id):
     queryset = Post.objects.filter(author=request.user)
     post = get_object_or_404(queryset, pk=id)
-    context = {'post': post}
+    context = {"post": post}
 
     if request.method == "GET":
         return render(request, "appone/delete.html", context)
     elif request.method == "POST":
         post.delete()
         messages.success(request, "Post deleted successfully!")
-        return redirect('home')
+        return redirect("home")

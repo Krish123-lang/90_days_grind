@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+
 # Create your models here.
 
 
@@ -12,7 +13,7 @@ class Post(models.Model):
 
     class Meta:
         # db_table = 'posts'
-        ordering = ['-published_at']
+        ordering = ["-published_at"]
 
     def __str__(self):
         return self.title
