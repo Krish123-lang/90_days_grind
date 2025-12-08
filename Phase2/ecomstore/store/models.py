@@ -2,6 +2,12 @@ from django.db import models
 
 
 # Create your models here.
+# Many To Many Field
+class Promotion(models.Model):
+    description=models.CharField(max_length=255)
+    discount=models.FloatField()
+    
+    
     
 class Collection(models.Model):
     title=models.CharField(max_length=255)
@@ -17,6 +23,8 @@ class Product(models.Model):
     inventory = models.IntegerField()
     last_updated = models.DateTimeField(auto_now=True)
     collection=models.ForeignKey(Collection, on_delete=models.PROTECT) # PROTECT: because I don't want to delete all the products when i delete a collection
+    
+    promotions=models.ManyToManyField(Promotion)
 
     def __str__(self):
         return self.title
